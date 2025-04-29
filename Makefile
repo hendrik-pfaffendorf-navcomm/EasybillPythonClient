@@ -1,14 +1,6 @@
 SPEC_URL = https://api.easybill.de/rest/v1/swagger.json
 CONVERT_URL = https://converter.swagger.io/api/convert
 
-all:
-	setup-env
-	refresh
-
-setup-env:
-	python3 -m venv .venv
-	.venv/bin/pip install -r requirements.txt
-
 refresh:
 	curl -X 'GET' '$(SPEC_URL)' | \
 		curl -X 'POST' '$(CONVERT_URL)' \
@@ -21,3 +13,7 @@ refresh:
 			--path /dev/stdin \
 			--output-path easybill_client_package \
 			--overwrite
+
+setup-env:
+	python3 -m venv .venv
+	.venv/bin/pip install -r requirements.txt
